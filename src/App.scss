@@ -29,6 +29,7 @@
   --color-brand: hsl(221, 83%, 55%);
   --color-nav-link: hsl(221, 83%, 55%);
   --color-menu: hsl(0, 11%, 98%);
+  --color-search-block: hsl(0, 0%, 100%);
 }
 
 
@@ -42,6 +43,7 @@
   --color-brand: hsl(221, 95%, 75%);
   --color-nav-link: hsl(221, 95%, 75%);
   --color-menu: hsl(0, 1%, 27%);
+  --color-search-block: #568196;
 }
 
 *,
@@ -304,7 +306,7 @@ img {
       height: 100%;
       z-index: 10;
       overflow: hidden;
-      background-color: var(--color-white);
+      background-color: var(--color-search-block);
       transition: all 0.35s ease-in-out;
 
       &.is-active {
