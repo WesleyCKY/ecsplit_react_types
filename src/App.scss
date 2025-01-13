@@ -22,11 +22,13 @@
 .theme-light {
   --dark-text: #181618;
   --light-text: #5E4B56;
-  --dark-background: #DBE7E4;
+  --dark-background: #feffff;
   --light-background: #EDDCD2;
   --accent: #5f6564;
   --button-border: #5E4B56;
   --color-brand: hsl(221, 83%, 55%);
+  --color-nav-link: hsl(221, 83%, 55%);
+  --color-menu: hsl(0, 11%, 98%);
 }
 
 
@@ -38,6 +40,8 @@
   --accent: #B8DBD9;
   --button-border: #B8DBD9;
   --color-brand: hsl(221, 95%, 75%);
+  --color-nav-link: hsl(221, 95%, 75%);
+  --color-menu: hsl(0, 1%, 27%);
 }
 
 *,
@@ -160,7 +164,7 @@ img {
    height: 100%;
    z-index: 10;
    overflow-y: auto;
-   background-color: var(--color-white);
+   background-color: var(--color-menu);
    box-shadow: var(--shadow-medium);
    transition: all 0.5s ease-in-out;
 
@@ -182,11 +186,11 @@ img {
       font-weight: 500;
       line-height: 1.5;
       text-transform: uppercase;
-      color: var(--color-black);
+      color: var(--color-nav-link);
       transition: all 0.3s ease;
 
       &:hover {
-         color: var(--color-blue-200);
+         color: var(--color-nav-link);
       }
    }
 

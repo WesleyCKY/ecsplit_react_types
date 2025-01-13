@@ -8,10 +8,15 @@ interface NavBarProps {
 }
 
 function NavBar({ brandName, navItems }: NavBarProps) {
-    const [selectedIndex, setSelectedIndex] = useState(0);
+    function getNavItemIndex(href) {
+        return navItems.findIndex(item => item.href === href);
+    }
+    const location = window.location.pathname
+    const [selectedIndex, setSelectedIndex] = useState(getNavItemIndex(location));
 
     useEffect(() => {
-        
+       
+        console.log(location);
         // Open and Close Navbar Menu
         const navbarMenu = document.getElementById("menu");
         const burgerMenu = document.getElementById("burger");
@@ -72,7 +77,7 @@ function NavBar({ brandName, navItems }: NavBarProps) {
     <header className="header" id="header">
          <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'></link>
     <nav className="navbar container">
-        <a href="./index.html" className="brand">{brandName}  { "-" } {navItems[selectedIndex].label}</a>
+        <a href={navItems[selectedIndex].href} className="brand">{brandName}  { "-" } {navItems[selectedIndex].label}</a>
         <div className="burger" id="burger">
             <span className="burger-line"></span>
             <span className="burger-line"></span>
@@ -85,7 +90,10 @@ function NavBar({ brandName, navItems }: NavBarProps) {
                     <li
                         className={`menu-item ${selectedIndex === index ? 'active' : ''}`}
                         key={index}
-                        onClick={() => setSelectedIndex(index)}
+                        onClick={() => {
+                            setSelectedIndex(index);
+                            
+                        }}
                     >
                         <a className="menu-link" href={item.href}>{item.label}</a>
                   </li>

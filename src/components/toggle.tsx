@@ -4,29 +4,13 @@ import '../styles/toggle.css';
 
 interface ToggleProps {
 
-    theme: string;
-
     togClass: string;
 
     handleOnClick: () => void;
 
 }
 
-const Toggle: React.FC<ToggleProps> = ({ theme, togClass, handleOnClick }) => {
-    
-    // let theme = localStorage.getItem('theme');
-
-    // const handleOnClick = () => {
-    //     if (localStorage.getItem('theme') === 'theme-dark') {
-    //         setTheme('theme-light');
-    //         setTogClass('light')
-    //     } else {
-    //         setTheme('theme-dark');
-    //         setTogClass('dark')
-    //     }
-    // }
-
-    
+const Toggle: React.FC<ToggleProps> = ({ togClass, handleOnClick }) => {
 
     return (
         <div className="container--toggle">
