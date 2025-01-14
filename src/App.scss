@@ -237,6 +237,17 @@ img {
   color: var(--dark-text);
 }
 
+h1 {
+   text-align: center;
+   color: var(--light-text);
+}
+
+h2 {
+   text-align: center;
+   color: var(--light-text);
+}
+
+
 // Burger
 .burger {
    position: relative;
@@ -345,4 +356,74 @@ img {
          visibility: hidden;
       }
    }
+}
+
+label {
+   display: block;
+   margin-bottom: 5px;
+   font-weight: bold;
+}
+
+button {
+   background-color: #007BFF;
+   color: white;
+   border: none;
+   cursor: pointer;
+   font-size: 16px;
+}
+
+button:hover {
+   background-color: #0056b3;
+}
+table {
+ width: 100%;
+ padding: 10px;
+ border-collapse: collapse;
+ margin: 20px auto;
+ margin-top: 20px;
+}
+table, th, td {
+ border: 1px solid var(--light-text);
+}
+th, td {
+ padding: 10px;
+ text-align: left;
+ font-size: 14px;
+ color: var(--light-text);
+}
+
+.summary {
+ margin-top: 20px;
+}
+.message {
+ margin: 10px 10px 20px;
+ padding: 10px;
+ border-radius: 5px;
+ display: none;
+ font-size: 14px;
+ width: calc(100% - 20px);
+ position: fixed;  /* Fixes the position relative to the viewport */
+ bottom: 0;       /* Positions the element at the bottom */
+ left: 0;         /* Aligns the element to the left */
+ padding: 10px;   /* Padding around the content */
+ text-align: center; /* Center the text */
+ z-index: 1000;   /* Ensures the element is above other content */
+}
+.success {
+ background-color: #d4edda;
+ color: #155724;
+ border: 1px solid #c3e6cb;
+}
+.error {
+ background-color: #f8d7da;
+ color: #721c24;
+ border: 1px solid #f5c6cb;
+}
+.paid {
+ color: green;
+ font-weight: bold;
+}
+.unpaid {
+ color: red;
+ font-weight: bold;
 }

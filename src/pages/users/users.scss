@@ -1,0 +1,20 @@
+
+.input-group {
+   margin-bottom: 20px;
+}
+
+.users-container {
+   width: 100%;
+   margin: 0 auto;
+   padding-top: 50px;
+   
+}
+
+.users-input, .users-select, .users-button {
+   width: calc(100% - 20px);
+   padding: 10px;
+   margin: 10px 10px 0;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+   font-size: 16px;
+}

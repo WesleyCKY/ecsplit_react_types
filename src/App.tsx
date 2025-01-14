@@ -14,12 +14,14 @@ const App: React.FC = () => {
 
 })
 
+const baseUrl = "/ecsplit";
+
 const navItems = [
-  { label: 'Home', href: '/' },
-  { label: 'Create Bill', href: '/createBill' },
-  { label: 'History', href: '/history' },
-  { label: 'Users', href: '/users' },
-  { label: 'Settings', href: '/settings' },
+  { label: 'Home', href: baseUrl },
+  { label: 'Create Bill', href: baseUrl + '/createBill' },
+  { label: 'History', href: baseUrl + '/history' },
+  { label: 'Settings', href: baseUrl + '/settings' },
+  { label: 'Users', href: baseUrl + '/users' },
 ];
 
 return (
@@ -28,7 +30,7 @@ return (
       brandName="EC Split" 
       navItems={navItems}/>
       
-    <BrowserRouter>
+    <BrowserRouter basename="/ecsplit">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/createBill" element={<CreateBill />} />

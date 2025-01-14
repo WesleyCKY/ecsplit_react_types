@@ -1,10 +1,17 @@
-import React, { useState, useEffect } from 'react';
-const Users = () => {
+import React, { useState, useEffect, use } from 'react';
+import "../../App.scss";
+import "./users.scss";
+import UsersController from "./users.js";
+import { fetchUsers } from '../../apis/users/usersData.js';
 
-    return (
-        <div className="settings">
-            <h2 className="toggle-text">Users</h2> 
-        </div>
+
+const Users = () => {
+    useEffect(() => {
+        fetchUsers();
+    });
+
+    return (        
+        <UsersController />
     );
 };
 
