@@ -1,6 +1,6 @@
 // Form.js
 import React, { useState, useEffect } from 'react';
-import { fetchUsers } from '../apis/users/usersData';
+import { fetchUsers } from '../apis/users/usersApi.ts';
 import '../styles/bill.scss';
 import MultipleSelect from '../pages/bills/multipleSelect.tsx';
 import Participant from '../models/Particiant.ts';
@@ -10,9 +10,19 @@ import SingleSelect from '../pages/bills/singelSelect.tsx';
 function BillForm() {
     const [allParticipants, setAllParticipants] = useState<Participant[]>([]);
     const [participants, setParticipants] = useState<Participant[]>([]);
+    // const [selectedParticipants, setSelectedParticipants] = useState<Participant[]>([]);
     const [payments, setPayments] = useState<{ [key: string]: number }>({});
     const [totalAmount, setTotalAmount] = useState<number>(0);
-    const [payer, setPayer] = useState<string>("");
+    const [payer, setPayer] = useState<Participant>({ id: -1, name: '' });
+
+    const defaultFormData = {
+            participants: [],
+            payerId: -1,
+            restaurant: '',
+            date: '',
+            billDetails: [] as BillDetails[],
+        }
+
     useEffect(() => {
         fetchUsers().then((data) => {
             setAllParticipants(data);
@@ -25,17 +35,11 @@ function BillForm() {
 
     const [formData, setFormData] = useState<{
         participants: Participant[];
-        payer: string;
+        payerId: number;
         restaurant: string;
         date: string;
         billDetails: BillDetails[];
-    }>({
-        participants: [],
-        payer: '',
-        restaurant: '',
-        date: '',
-        billDetails: [] as BillDetails[],
-    });
+    }>(defaultFormData);
 
     const [errors, setErrors] = useState<{ participants?: string; payer?: string; restaurant?: string; date?: string; billDetails?: BillDetails[]; }>({});
 
@@ -71,6 +75,13 @@ function BillForm() {
         updatePayerOptions(participants)
     }
 
+    function clearFormData() {
+        setFormData(defaultFormData);
+        setParticipants([]);
+        setPayer({ id: -1, name: '' });
+        setErrors({});
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const newErrors = validateForm(formData);
@@ -78,9 +89,11 @@ function BillForm() {
 
         if (Object.keys(newErrors).length === 0) {
             // Form submission logic here
-            console.log('Form submitted successfully!');
+            console.log('Form submitted data: ', formData);
+            // TODO: get form data and send to backend
+
         } else {
-            console.log('Form submission failed due to validation errors.');
+            console.log('Form submission failed due to validation errors.', formData);
         }
     };
 
@@ -91,7 +104,7 @@ function BillForm() {
             errors.participants = 'At least one participant is required';
         }
 
-        if (!data.payer.trim()) {
+        if (!data.payerId) {
             errors.payer = 'Username is required';
         } 
 
@@ -115,9 +128,12 @@ function BillForm() {
                     <label className="form-label">
                         Participants:
                     </label>
-                    <MultipleSelect allParticipants={allParticipants} onChange={(selectedParticipants) => {
-                        setParticipants(selectedParticipants);
-                        setFormData({
+                    <MultipleSelect 
+                        allParticipants={allParticipants} 
+                        participants={participants} 
+                        setParticipants={setParticipants} 
+                        onChange={(selectedParticipants) => {
+                            setFormData({
                             ...formData,
                             'participants': selectedParticipants,
                         });
@@ -133,12 +149,16 @@ function BillForm() {
                     <label className="form-label">
                         Payer:
                     </label>
-                    <SingleSelect participants={participants} onChange={(selectedPayer) => {
-                        setPayer(selectedPayer.name);
-                        setFormData({
-                            ...formData,
-                            'payer': selectedPayer.name,
-                        });
+                    <SingleSelect 
+                        participants={participants} 
+                        payer={payer} 
+                        setPayer={setPayer} 
+                        onChange={(payerOption) => {
+                            console.log('payer: ',payerOption)
+                            setFormData({
+                                ...formData,
+                                'payerId': payerOption.value,
+                            });
                     } } />
                     {errors.payer && (
                         <span className="error-message">
@@ -152,8 +172,8 @@ function BillForm() {
                     </label>
                     <input
                         className="form-input"
-                        type="password"
-                        name="password"
+                        type="text"
+                        name="restaurant"
                         value={formData.restaurant}
                         onChange={handleChange}
                     />
@@ -169,8 +189,8 @@ function BillForm() {
                     </label>
                     <input
                         className="form-input"
-                        type="password"
-                        name="confirmPassword"
+                        type="date"
+                        name="date"
                         value={formData.date}
                         onChange={handleChange}
                     />
@@ -182,7 +202,7 @@ function BillForm() {
                 </div>
                 <div className="button-container">
                     <button className="submit-button" type="submit">Submit</button>
-                    <button className="cancel-button" type="button" data-dismiss="modal">Cancel</button>
+                    <button className="cancel-button" type="button" data-dismiss="modal" onClick={() => clearFormData()}>Cancel</button>
                 </div>
             </form>
         </div>

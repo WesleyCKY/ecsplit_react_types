@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { default as ReactSelect, components } from "react-select";
 import Participant from '../../models/Particiant';
 
 interface MultipleSelectProps {
   allParticipants: Participant[];
   onChange: (selectedParticipants: Participant[]) => void;
+  participants: Participant[];
+  setParticipants: (selectedParticipants: Participant[]) => void;
 }
 
 const Option = (props) => {
@@ -23,15 +25,19 @@ const Option = (props) => {
   );
 };
 
-const MultipleSelect: React.FC<MultipleSelectProps> = ({ allParticipants, onChange }) => {
-  const [selectedParticipants, setSelectedParticipants] = useState<Participant[]>([]);
+const MultipleSelect: React.FC<MultipleSelectProps> = ({ allParticipants, participants, setParticipants, onChange}) => {
+  // const [selectedParticipants, setSelectedParticipants] = useState<Participant[]>([]);
   // const [state, setState] = useState({ optionSelected: null });
   
   const handleChange = (selectedOptions: any) => {
     const selected = selectedOptions ? selectedOptions.map((option: any) => option.value) : [];
-    setSelectedParticipants(selected);
+    setParticipants(selected);
     onChange(selected);
   };
+
+  useEffect(() => {    
+      setParticipants([]);
+  } , [allParticipants]);
 
   return (
     <ReactSelect
@@ -45,7 +51,7 @@ const MultipleSelect: React.FC<MultipleSelectProps> = ({ allParticipants, onChan
         hideSelectedOptions={false}
         components={{ Option }}
         onChange={handleChange}
-        value={selectedParticipants.map(participant => ({
+        value={participants.map(participant => ({
           value: participant,
           label: `${participant.name}`
         }))}

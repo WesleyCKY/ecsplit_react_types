@@ -1,23 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { default as ReactSelect, components } from "react-select";
 import Participant from "../../models/Particiant";
 
   
 interface SingleSelectProps {
     participants: Participant[];
-    onChange: (selectedPayer: Participant) => void;
+    payer: Participant;
+    setPayer: (payer: Participant) => void;
+    onChange: (payer) => void;
 }
 
 
-const SingleSelect: React.FC<SingleSelectProps> = ({ participants, onChange }) => {
+const SingleSelect: React.FC<SingleSelectProps> = ({ participants, payer, setPayer, onChange }) => {
     const handleChange = (selectedOption: any) => {
-      onChange(selectedOption.value);
+        console.log('selectedOption: ',selectedOption)
+        setPayer({name: selectedOption.label, id: selectedOption.value});
     };
   
-    const options = participants.map(participant => ({
-      value: participant,
+    const options = participants.map((participant) => ({
+      value: participant.id, // assuming 'id' is a string property of Participant
       label: participant.name
     }));
+
+    useEffect(() => {
+        setPayer(participants[0]);
+    }, [participants]);
   
     return (
       <ReactSelect
@@ -25,6 +32,7 @@ const SingleSelect: React.FC<SingleSelectProps> = ({ participants, onChange }) =
         isClearable
         components={{ Option }}
         onChange={handleChange}
+        value={payer ? { value: payer.id, label: payer.name } : null}
       />
     );
   };

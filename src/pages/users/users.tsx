@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchUsers } from '../../apis/users/usersData.js';
+import { createUser, fetchUsers } from '../../apis/users/usersApi.ts';
 import { showMessage } from '../../utils/message.js';
 import { useTranslation } from 'react-i18next';
 import NewUserModal from "../../components/newUserModal.tsx";
@@ -72,15 +72,8 @@ const UsersController = () => {
 
   const submitCreate = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/names/create`, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name: nameInput }),
-      });
-      const result = await response.json();
+      const response = await createUser(nameInput);
+      const result = await response;
 
       if (!result.error) {
         console.log(result.message);
