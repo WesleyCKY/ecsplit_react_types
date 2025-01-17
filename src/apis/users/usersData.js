@@ -2,7 +2,8 @@
 
 async function fetchUsers() {
     try {
-        const result = await fetch('http://localhost:3010/names')  // Replace with your API endpoint
+        console.log('Base URL .env : ',process.env.REACT_APP_BASE_URL)
+        const result = await fetch(process.env.REACT_APP_BASE_URL+ "/names")  // Replace with your API endpoint
             .then(response => response.json())
             .then(data => data)
             .catch(error => console.error(error));

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, use } from 'react';
 import "../../App.scss";
 import "./users.scss";
-import UsersController from "./users.js";
+import UsersController from "./users.tsx";
 import { fetchUsers } from '../../apis/users/usersData.js';
 
 

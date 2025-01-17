@@ -18,7 +18,7 @@ const Settings = () => {
     }
 
     return (
-        <div className="settings">
+        <div className="settings-container">
             <h2 className="toggle-text">Theme:</h2> 
             <Toggle handleOnClick={handleOnClick} togClass={togClass} />
         </div>

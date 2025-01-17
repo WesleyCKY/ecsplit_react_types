@@ -20,31 +20,36 @@
 }
 
 .theme-light {
-  --dark-text: #181618;
-  --light-text: #5E4B56;
-  --dark-background: #feffff;
-  --light-background: #EDDCD2;
-  --accent: #5f6564;
-  --button-border: #5E4B56;
-  --color-brand: hsl(221, 83%, 55%);
-  --color-nav-link: hsl(221, 83%, 55%);
-  --color-menu: hsl(0, 11%, 98%);
-  --color-search-block: hsl(0, 0%, 100%);
-}
-
-
-.theme-dark {
-  --dark-text: #e1dada;
-  --light-text: #F9F8F8;  
-  --dark-background: #2F4550;
-  --light-background: #586F7C;
-  --accent: #B8DBD9;
-  --button-border: #B8DBD9;
-  --color-brand: hsl(221, 95%, 75%);
-  --color-nav-link: hsl(221, 95%, 75%);
-  --color-menu: hsl(0, 1%, 27%);
-  --color-search-block: #568196;
-}
+   --dark-text: #181618; /* Dark text color for light theme */
+   --light-text: #5E4B56; /* Lighter text for contrast */
+   --theme-background: #FFFFFF; /* Main background color */
+   --light-background: #EDDCD2; /* Light background for sections */
+   --accent: #5f6564; /* Accent color */
+   --button-border: #5E4B56; /* Button border color */
+   --color-brand: hsl(221, 83%, 55%); /* Brand color */
+   --color-nav-link: hsl(221, 83%, 55%); /* Navigation link color */
+   --color-menu: hsl(0, 0%, 86%); /* Menu background color */
+   --color-search-block: hsl(226, 100%, 96%); /* Search block background */
+   --button-theme: #007BFF; /* Button color */
+   --hover-background: hsl(221, 83%, 90%); /* Hover effect for buttons */
+   --divider: hsl(0, 0%, 80%); /* Divider color for separation */
+ }
+ 
+ .theme-dark {
+   --dark-text: #e1dada; /* Light text for dark theme */
+   --light-text: #FFFFFF; /* White text for better contrast */
+   --theme-background: #192734; /* Dark background */
+   --light-background: #586F7C; /* Light background for sections */
+   --accent: #B8DBD9; /* Accent color */
+   --button-border: #B8DBD9; /* Button border color */
+   --color-brand: hsl(221, 95%, 75%); /* Brand color */
+   --color-nav-link: hsl(221, 95%, 75%); /* Navigation link color */
+   --color-menu: hsl(0, 1%, 27%); /* Menu background */
+   --color-search-block: #568196; /* Search block background */
+   --button-theme: #007BFF; /* Button color */
+   --hover-background: hsl(221, 95%, 85%); /* Hover effect for buttons */
+   --divider: hsl(0, 0%, 40%); /* Divider color for separation */
+ }
 
 *,
 *::before,
@@ -73,7 +78,7 @@ body {
    font-weight: 400;
    line-height: 1.5;
    color: var(--color-black);
-   background-color: var(--dark-background);
+   background-color: var(--theme-background);
 }
 
 main {
@@ -87,6 +92,17 @@ button {
    outline: none;
    background: none;
    text-transform: unset;
+}
+
+.create-button {
+   width: calc(100% - 20px);
+   max-width: 30rem;
+   padding: 10px;
+   margin: 10px 10px 0;
+   border: 1px solid #ccc;
+   border-radius: 5px;
+   font-size: 16px;
+   background-color: var(--button-theme);
 }
 
 img,
@@ -111,7 +127,7 @@ img {
 
 .container {
    max-width: 75rem;
-   height: auto;
+   height: 100%;
    margin: 0 auto;
    padding: 0 1.25rem;
 }
@@ -125,14 +141,15 @@ img {
    text-transform: uppercase;
    color: var(--color-brand);
 }
-  .settings {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 20px;
-    z-index: 10;
-    padding: 5rem 0;
-  }
+
+.settings-container {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin: 20px;
+   z-index: 10;
+   padding: 5rem 0;
+}
 
 // Header
 .header {
@@ -365,7 +382,7 @@ label {
 }
 
 button {
-   background-color: #007BFF;
+   background-color: var(--button-theme);
    color: white;
    border: none;
    cursor: pointer;
@@ -373,7 +390,7 @@ button {
 }
 
 button:hover {
-   background-color: #0056b3;
+   background-color: var(--button-theme);
 }
 table {
  width: 100%;
@@ -427,3 +444,80 @@ th, td {
  color: red;
  font-weight: bold;
 }
+
+.form-container {
+   max-width: 400px;
+   margin: 50px auto;
+   padding: 20px;
+   border: 1px solid var(--button-border);
+   border-radius: 5px;
+   background-color: var(--theme-background);
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+ }
+ 
+ .form-title {
+   text-align: center;
+   margin-bottom: 20px;
+   font-size: 24px;
+   color: var(--light-text);
+ }
+ 
+ .form-label {
+   display: block;
+   margin-bottom: 5px;
+   font-weight: bold;
+   color: var(--dark-text);
+ }
+ 
+ .form-input {
+   width: 100%;
+   padding: 10px;
+   margin-bottom: 10px;
+   border: 1px solid var(--button-border);
+   border-radius: 5px;
+   box-sizing: border-box;
+   font-size: 14px;
+ }
+ 
+ .error-message {
+   color: red;
+   font-size: 12px;
+   margin-top: -10px;
+   margin-bottom: 10px;
+ }
+
+ .button-container {
+   margin-top: 20px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   gap: 10px; 
+ }
+
+ .cancel-button {
+   width: 100%;
+   padding: 10px;
+   background-color: #ff0000;
+   border: none;
+   border-radius: 5px;
+   color: white;
+   font-size: 16px;
+   cursor: pointer;
+   transition: background-color 0.3s ease;
+ }
+ 
+ .submit-button {
+   width: 100%;
+   padding: 10px;
+   background-color: #007bff;
+   border: none;
+   border-radius: 5px;
+   color: white;
+   font-size: 16px;
+   cursor: pointer;
+   transition: background-color 0.3s ease;
+ }
+ 
+ .submit-button:hover {
+   background-color: #0056b3;
+ }

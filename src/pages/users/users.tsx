@@ -1,10 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { fetchUsers } from '../../apis/users/usersData';
-import { showMessage } from '../../utils/message';
+import { fetchUsers } from '../../apis/users/usersData.js';
+import { showMessage } from '../../utils/message.js';
+import { useTranslation } from 'react-i18next';
+import NewUserModal from "../../components/newUserModal.tsx";
+import "./users.scss";
+import 'bootstrap';
+import { Modal } from 'bootstrap';
 
 const UsersController = () => {
-  const [users, setUsers] = useState([]);
+  // const {tu} = useTranslation("users");
+  interface User {
+    id: number;
+    name: string;
+  }
+  
+  const [users, setUsers] = useState<User[]>([]);
   const [nameInput, setNameInput] = useState('');
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     loadUsers();
@@ -28,7 +40,7 @@ const UsersController = () => {
 
   const deleteUser = async (userId) => {
     try {
-      const response = await fetch(`/names/delete`, {
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/names/delete`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -60,7 +72,7 @@ const UsersController = () => {
 
   const submitCreate = async () => {
     try {
-      const response = await fetch(`/names/create`, {
+      const response = await fetch(`${process.env.REACT_APP_BASE_URL}/names/create`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -70,8 +82,12 @@ const UsersController = () => {
       });
       const result = await response.json();
 
-      if (result) {
+      if (!result.error) {
         console.log(result.message);
+        const MyModal = new Modal(document.querySelector("#nameModal"));
+        MyModal.hide();
+        setShowModal(false);
+        showMessage(result.message);
         await loadUsers();
       } else {
         console.error('Error creating user:', result.statusText);
@@ -92,23 +108,15 @@ const UsersController = () => {
 
   return (
     <div className="users-container hidden" id="admin">
-    
-    {/* <div>
-      <input
-        type="text"
-        id="nameInput"
-        value={nameInput}
-        onChange={(e) => setNameInput(e.target.value)}
-      />
-      <button onClick={submitCreate}>Create User</button>
-    </div> */}
     <div id="updateStatus"></div>
-    <h1>Users</h1>
+    <button type="button" className="btn btn-primary users-button" data-toggle="modal" data-target="#nameModal">
+          Add User
+        </button>
     <table id="adminTable" className="min-w-full border-collapse">
       <thead>
         <tr>
-          <th className="border-b-2 px-4 py-2">姓名</th>
-          <th className="border-b-2 px-4 py-2">操作</th>
+          <th className="border-b-2 px-4 py-2">Name</th>
+          <th className="border-b-2 px-4 py-2">Operation</th>
         </tr>
       </thead>
       <tbody>
@@ -116,13 +124,37 @@ const UsersController = () => {
           <tr key={user.id}>
             <td className="border-b px-4 py-2">{user.name}</td>
             <td className="border-b px-4 py-2">
-              <button onClick={() => confirmDelete(user.id)}>Delete</button>
+              <button className="users-button" onClick={() => confirmDelete(user.id)}>Delete</button>
             </td>
           </tr>
         ))}
       </tbody>
     </table>
     <h3 id="updateStatus" className="mt-4"></h3>
+    <div className="modal" id="nameModal" tabIndex={-1} role="dialog" aria-labelledby="nameModalLabel" aria-hidden="true">
+        <div className="modal-dialog" role="document">
+            <div className="modal-content">
+                <div className="modal-header modal-title-theme" style={{ width: '100%' }}>
+                    <h2 className="modal-title" id="nameModalLabel">Initial係咩先？</h2>
+                    <button type="button" className="close" style={{ width: '20%' }} data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div className="modal-body modal-body-theme">
+                    <form id="nameForm" onSubmit={(e) => { e.preventDefault(); submitCreate(); }}>
+                        <div className="form-group">
+                            <label htmlFor="nameInput">Initial或者名字</label>
+                            <input type="text" className="form-control" id="nameInput" placeholder="輸入新的initial/name" onChange={(e) => setNameInput(e.target.value)} required />
+                        </div>
+                    </form>
+                </div>
+                <div className="modal-footer modal-footer-theme">
+                    <button type="button" className="btn btn-secondary " data-dismiss="modal">離開</button>
+                    <button type="button" className="btn btn-primary modal-button-confirm" onClick={submitCreate}>添加</button>
+                </div>
+            </div>
+        </div>
+    </div>
   </div>
   );
 };
